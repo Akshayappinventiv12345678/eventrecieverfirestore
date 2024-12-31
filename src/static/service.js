@@ -74,8 +74,8 @@ async function publishData(brand, data) {
       // Add additional keys to the payload
       const updatedData = {
         ...data,
-        last_coordinates_updated: lastCoordinatesUpdated,
-        payload_update_time: payloadUpdateTime,
+       lastCoordinatesUpdated,
+        payloadUpdateTime,
       };
 
       // Add or overwrite the document in Firestore
