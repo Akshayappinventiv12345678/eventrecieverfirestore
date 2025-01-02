@@ -14,7 +14,7 @@ function getRandomETA() {
   return Math.floor(Math.random() * 30) + 15;  // ETA between 15 to 45 minutes
 }
 function getRandomTimeout() {
-  return Math.floor(Math.random() * 5) + 5;  // ETA between 5 to 10 seconds
+  return Math.floor(Math.random() * 5) + 7;  // ETA between 5 to 10 seconds
 }
 
 // Helper function to generate random rider details
