@@ -3,6 +3,7 @@ const orders = require("./static/orders");
 const publishData=require("./static/service")
 const locations= require('./static/locations');
 const { makePostRequest } = require("./static/azureservie");
+const { addOrder, removeOrder } = require("./static/activeorders");
 // Mock Webhook URLs for each brand
 const webhookUrls = {
   kfc: 'http://localhost:3000/webhook/kfc',
@@ -40,7 +41,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
     { status: 'Assigned', code: 2, eta: 20, location: locations[0] },
     { status: 'Seen', code: 3, eta: 20, location: locations[0] },
     { status: 'Scanned', code: 4, eta: 20, location: locations[0] },
-    { status: 'OrderPicked', code: 7, eta: 20, location: locations[0] },
+    { status: 'OrderPicked', code: 7, eta: 20, location: locations[1] },
     { status: 'OrderPicked', code: 12, eta: 14, location: locations[1] },
     { status: 'OrderPicked', code: 7, eta: 11, location: locations[2] },
     { status: 'OrderPicked', code: 7, eta: 8, location: locations[3] },
@@ -51,11 +52,29 @@ async function simulateOrderJourney2(brand, orderId, items) {
   ];
   
   let isStoreGeoFenceIn=true;
+  let etaFlag=false;
+  let riderdetailsFlag=fasle;
+
+
+  let result= addOrder(true,orderId);
+   console.log("Adding Order",orderId,result);
 
 
   for (let i = 0; i < orderEvents.length; i++) {
     try {
       console.log(`Sending "${orderEvents[i].status}" update for ${brand}, Order ID: ${orderId}`);
+
+
+      if(orderEvents[i].code==11)
+        {
+            //assigned
+            riderdetailsFlag=true;
+        }
+        if(orderEvents[i].code==7)
+        {
+          etaFlag=true;
+        }
+      
 
       if(orderEvents[i].code===12){
         isStoreGeoFenceIn=false;
@@ -83,10 +102,10 @@ async function simulateOrderJourney2(brand, orderId, items) {
         posCreatedAtTimezone: "2024-12-12T23:41:47Z",
         riderLatitude: rider.latitude || "",
         riderLongitude: rider.longitude || "",
-        eta: orderEvents[i].eta,
-        riderId: rider.id || "",
-        riderName: rider.name || "",
-        riderPhone: rider.phone || "",
+        eta: etaFlag? orderEvents[i].eta:"",
+        riderId: riderdetailsFlag? rider.id || "":"",
+        riderName: riderdetailsFlag?rider.name || "":"",
+        riderPhone: riderdetailsFlag? rider.phone || "":"",
         accuracy: "",
         speed: "",
         heading: "0",
@@ -120,6 +139,8 @@ async function simulateOrderJourney2(brand, orderId, items) {
       console.log(`Error sending ${orderEvents[i].status} for ${brand}, Order ID: ${orderId}`, error);
     }
   }
+      result=removeOrder(true,orderId);
+      console.log("After Removing Order",orderId,result);
 
   console.log(`Order journey for ${brand}, Order ID: ${orderId} completed.`);
 }
@@ -136,4 +157,4 @@ async function serversimulateOrders(orderId) {
 
 // Start the order simulation
 // simulateOrders();
-module.exports=serversimulateOrders;
+module.exports=serversimulateOrders

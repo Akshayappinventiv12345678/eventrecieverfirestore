@@ -1,7 +1,8 @@
 
 const orders = require("./static/orders");
 const publishData=require("./static/service")
-const locations= require('./static/locations')
+const locations= require('./static/locations');
+const { addOrder, removeOrder } = require("./static/activeorders");
 // Mock Webhook URLs for each brand
 const webhookUrls = {
   kfc: 'http://localhost:3000/webhook/kfc',
@@ -20,9 +21,9 @@ function getRandomTimeout() {
 // Helper function to generate random rider details
 function getRiderDetails() {
   const riders = [
-    { name: 'John Doe', phone: '555-1234' },
-    { name: 'Jane Smith', phone: '555-5678' },
-    { name: 'Rick Johnson', phone: '555-9012' }
+    { name: 'John Doe', phone: '555-1234' ,id:"1"},
+    { name: 'Jane Smith', phone: '555-5678',id:"2" },
+    { name: 'Rick Johnson', phone: '555-9012',id:"3" }
   ];
   return riders[Math.floor(Math.random() * riders.length)];
 }
@@ -115,7 +116,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
     { status: 'Assigned', code: 2, eta: 20, location: locations[0] },
     { status: 'Seen', code: 3, eta: 20, location: locations[0] },
     { status: 'Scanned', code: 4, eta: 20, location: locations[0] },
-    { status: 'OrderPicked', code: 7, eta: 20, location: locations[0] },
+    { status: 'OrderPicked', code: 7, eta: 20, location: locations[1] },
     { status: 'OrderPicked', code: 12, eta: 14, location: locations[1] },
     { status: 'OrderPicked', code: 7, eta: 11, location: locations[2] },
     { status: 'OrderPicked', code: 7, eta: 8, location: locations[3] },
@@ -126,11 +127,28 @@ async function simulateOrderJourney2(brand, orderId, items) {
   ];
   
   let isStoreGeoFenceIn=true;
+  let etaFlag=false;
+  let riderdetailsFlag=false;
+
+  //adding order
+  let result=addOrder(false,orderId);
+  console.log("adding order",orderId,result);
 
 
   for (let i = 0; i < orderEvents.length; i++) {
     try {
       console.log(`Sending "${orderEvents[i].status}" update for ${brand}, Order ID: ${orderId}`);
+
+      if(orderEvents[i].code==2)
+      {
+          //assigned
+          riderdetailsFlag=true;
+      }
+      if(orderEvents[i].code==7)
+      {
+        etaFlag=true;
+      }
+    
 
       if(orderEvents[i].code===12){
         isStoreGeoFenceIn=false;
@@ -158,10 +176,10 @@ async function simulateOrderJourney2(brand, orderId, items) {
         posCreatedAtTimezone: "2024-12-12T23:41:47Z",
         riderLatitude: rider.latitude || "",
         riderLongitude: rider.longitude || "",
-        eta: orderEvents[i].eta,
-        riderId: rider.id || "",
-        riderName: rider.name || "",
-        riderPhone: rider.phone || "",
+        eta: etaFlag? orderEvents[i].eta:"",
+        riderId: riderdetailsFlag? rider.id || "":"",
+        riderName: riderdetailsFlag?rider.name || "":"",
+        riderPhone: riderdetailsFlag? rider.phone || "":"",
         accuracy: "",
         speed: "",
         heading: "0",
@@ -195,6 +213,12 @@ async function simulateOrderJourney2(brand, orderId, items) {
     }
   }
 
+   //adding order
+   
+  result=removeOrder(false,orderId);
+
+  console.log("After Removing Order",orderId,result);
+
   console.log(`Order journey for ${brand}, Order ID: ${orderId} completed.`);
 }
 
@@ -210,4 +234,5 @@ async function simulateOrders(orderId) {
 
 // Start the order simulation
 // simulateOrders();
+//module.exports=simulateOrders;
 module.exports=simulateOrders;
