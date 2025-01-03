@@ -53,7 +53,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
   
   let isStoreGeoFenceIn=true;
   let etaFlag=false;
-  let riderdetailsFlag=fasle;
+  let riderdetailsFlag=false;
 
 
   let result= addOrder(true,orderId);
