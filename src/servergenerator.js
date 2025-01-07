@@ -22,9 +22,9 @@ function getRandomTimeout() {
 // Helper function to generate random rider details
 function getRiderDetails() {
   const riders = [
-    { name: 'John Doe', phone: '555-1234' },
-    { name: 'Jane Smith', phone: '555-5678' },
-    { name: 'Rick Johnson', phone: '555-9012' }
+    { name: 'John Doe', phone: '555-1234' ,id:"1"},
+    { name: 'Jane Smith', phone: '555-5678',id:"2" },
+    { name: 'Rick Johnson', phone: '555-9012',id:"3" }
   ];
   return riders[Math.floor(Math.random() * riders.length)];
 }
@@ -35,20 +35,31 @@ async function simulateOrderJourney2(brand, orderId, items) {
   const eta = getRandomETA();
   const rider = getRiderDetails();
 
+
   const orderEvents = [
     
-    { status: 'Unassigned', code: 11, eta: 30, location: locations[0] },
-    { status: 'Assigned', code: 2, eta: 20, location: locations[0] },
-    { status: 'Seen', code: 3, eta: 20, location: locations[0] },
-    { status: 'Scanned', code: 4, eta: 20, location: locations[0] },
+    { status: 'Unassigned', code: 11, eta: '', location: locations[0] },
+    { status: 'Assigned', code: 2, eta: '', location: locations[0] },
+    { status: 'Seen', code: 3, eta: '', location: locations[0] },
+    { status: 'Scanned', code: 4, eta: '', location: locations[0] },
     { status: 'OrderPicked', code: 7, eta: 20, location: locations[1] },
     { status: 'OrderPicked', code: 12, eta: 14, location: locations[1] },
-    { status: 'OrderPicked', code: 7, eta: 11, location: locations[2] },
-    { status: 'OrderPicked', code: 7, eta: 8, location: locations[3] },
-    { status: 'OrderPicked', code: 7, eta: 6, location: locations[4] },
-    { status: 'OrderPicked', code: 7, eta: 4, location: locations[5] },
-    { status: 'OrderPicked', code: 13, eta: 2, location: locations[6] },
-    { status: 'Delivered', code: 8, eta: 0, location: locations[7] },
+    { status: "OrderPicked", code: 7, eta: 19, location: locations[2] },
+    { status: "OrderPicked", code: 7, eta: 17, location: locations[3] },
+    { status: "OrderPicked", code: 7, eta: 15, location: locations[4] },
+    { status: "OrderPicked", code: 7, eta: 13, location: locations[5] },
+    { status: "OrderPicked", code: 7, eta: 11, location: locations[6] },
+    { status: "OrderPicked", code: 7, eta: 9, location: locations[7] },
+    { status: "OrderPicked", code: 7, eta: 8, location: locations[8] },
+    { status: "OrderPicked", code: 7, eta: 7, location: locations[9] },
+    { status: "OrderPicked", code: 7, eta: 6, location: locations[10] },
+    { status: "OrderPicked", code: 7, eta: 5, location: locations[11] },
+    { status: "OrderPicked", code: 7, eta: 4, location: locations[12] },
+    { status: "OrderPicked", code: 7, eta: 3, location: locations[13] },
+    { status: "OrderPicked", code: 7, eta: 2, location: locations[14] },
+    { status: "OrderPicked", code: 7, eta: 1, location: locations[15] },
+    { status: 'OrderPicked', code: 13, eta: 1, location: locations[16] },
+    { status: 'Delivered', code: 8, eta: 0, location: locations[16] },
   ];
   
   let isStoreGeoFenceIn=true;
