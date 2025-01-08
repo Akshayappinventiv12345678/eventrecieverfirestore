@@ -69,6 +69,11 @@ async function simulateOrderJourney2(brand, orderId, items) {
 
   let result= addOrder(true,orderId);
    console.log("Adding Order",orderId,result);
+   const now = new Date();
+   now.setMinutes(now.getMinutes() - 5); // Subtract 5 minutes
+   let posCreatedTime  = now.toISOString(); // Adds 5 minutes (5 * 60 * 1000 milliseconds)
+ 
+ 
 
 
   for (let i = 0; i < orderEvents.length; i++) {
@@ -110,7 +115,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
         almpStatusId: orderEvents[i].code,
         deliveryLocationLat: "26.187386",
         deliveryLocationLng: "50.48678",
-        posCreatedAtTimezone: "2024-12-12T23:41:47Z",
+        posCreatedAtTimezone:posCreatedTime,
         riderLatitude: rider.latitude || "",
         riderLongitude: rider.longitude || "",
         eta: etaFlag? orderEvents[i].eta:"",
