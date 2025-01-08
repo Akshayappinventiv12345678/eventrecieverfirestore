@@ -45,7 +45,16 @@ async function simulateOrderJourney2(brand, orderId, items) {
     { status: 'OrderPicked', code: 7, eta: 20, location: locations[1] },
     { status: 'OrderPicked', code: 12, eta: 14, location: locations[1] },
     { status: "OrderPicked", code: 7, eta: 19, location: locations[2] },
-    { status: "OrderPicked", code: 7, eta: 17, location: locations[3] },
+        
+    { status: 'Unassigned', code: 11, eta: '', location: locations[0] },
+    { status: 'Unassigned', code: 11, eta: '', location: locations[0] },
+    { status: 'Unassigned', code: 11, eta: '', location: locations[0] },
+    { status: 'Assigned', code: 2, eta: '', location: locations[0] },
+    { status: 'Seen', code: 3, eta: '', location: locations[0] },
+    { status: 'Scanned', code: 4, eta: '', location: locations[0] },
+    { status: 'OrderPicked', code: 7, eta: 20, location: locations[1] },
+
+    { status: "OrderPicked", code: 7, eta: 18, location: locations[3] },
     { status: "OrderPicked", code: 7, eta: 15, location: locations[4] },
     { status: "OrderPicked", code: 7, eta: 13, location: locations[5] },
     { status: "OrderPicked", code: 7, eta: 11, location: locations[6] },
@@ -75,26 +84,45 @@ async function simulateOrderJourney2(brand, orderId, items) {
   now.setMinutes(now.getMinutes() - 5); // Subtract 5 minutes
   let posCreatedTime  = now.toISOString(); // Adds 5 minutes (5 * 60 * 1000 milliseconds)
 
+  let isOrderOnHold=false;
 
-
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < orderEvents.length; i++) {
     try {
       console.log(`Sending "${orderEvents[i].status}" update for ${brand}, Order ID: ${orderId}`);
 
+
+
+ 
 
       if(orderEvents[i].code==11)
         {
             //assigned
             riderdetailsFlag=true;
+
+            if(i>4 && !isOrderOnHold && orderEvents[i].code==11){
+              isOrderOnHold=true;
+      
+            }
         }
+      else{
+
+        if(i>4 && isOrderOnHold ){
+          isOrderOnHold=false;
+        }
+
+      }
         if(orderEvents[i].code==7)
         {
           etaFlag=true;
+
+     
+
         }
       
 
       if(orderEvents[i].code===12){
         isStoreGeoFenceIn=false;
+        
       }
       
       // Firestore payload structure
@@ -130,8 +158,8 @@ async function simulateOrderJourney2(brand, orderId, items) {
         orderPosId: "63102",
         orderSourceName: "Call Center",
         orderStatusName: orderEvents[i].status,
-        isIntegratedPartner: true,
-        isOrderOnHold: false,
+        isIntegratedPartner: false,
+        isOrderOnHold,
         isClubbedOrder: true,
         inTransit: false,
         isStoreGeoFenceIn,
