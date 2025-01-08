@@ -110,6 +110,8 @@ async function publishData(brand, data) {
         payloadUpdateTime = now;
       }
 
+     
+
       // Format dates to the custom string format
       const formattedLastCoordinatesUpdated = formatDateToCustomString(lastCoordinatesUpdated);
       const formattedPayloadUpdateTime = formatDateToCustomString(payloadUpdateTime);

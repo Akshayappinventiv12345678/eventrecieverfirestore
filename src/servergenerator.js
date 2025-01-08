@@ -77,7 +77,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
 
 
 
-  for (let i = 0; i < ; i++) {
+  for (let i = 0; i < 5; i++) {
     try {
       console.log(`Sending "${orderEvents[i].status}" update for ${brand}, Order ID: ${orderId}`);
 
