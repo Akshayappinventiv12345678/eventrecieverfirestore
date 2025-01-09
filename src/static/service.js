@@ -135,7 +135,7 @@ async function publishData(brand, data) {
         payloadUpdateTime,
       };
       // Add or overwrite the document in Firestore
-      await setDoc(docRef, updatedData);
+      await setDoc(docRef, updatedData, { merge: true });
 
       console.log("Document added with ID:", docId);
       resolve(`Data added successfully with ID: ${docId}`);
