@@ -46,14 +46,14 @@ async function simulateOrderJourney2(brand, orderId, items) {
     { status: 'OrderPicked', code: 12, eta: 14, location: locations[1] },
     { status: "OrderPicked", code: 7, eta: 19, location: locations[2] },
         
-    { status: 'Unassigned', code: 11, eta: '', location: locations[0] },
-    { status: 'Unassigned', code: 11, eta: '', location: locations[0] },
-    { status: 'Unassigned', code: 11, eta: '', location: locations[0] },
+    { status: 'Unassigned', code: 11, eta: '', location: locations[0],ishod:true },
+    { status: 'Unassigned', code: 11, eta: '', location: locations[0], ishod:true},
+    { status: 'Unassigned', code: 11, eta: '', location: locations[0],ishod:true },
     { status: 'Assigned', code: 2, eta: '', location: locations[0] },
     { status: 'Seen', code: 3, eta: '', location: locations[0] },
     { status: 'Scanned', code: 4, eta: '', location: locations[0] },
     { status: 'OrderPicked', code: 7, eta: 20, location: locations[1] },
-
+    // { status: 'OrderPicked', code: 12, eta: 14, location: locations[1] },
     { status: "OrderPicked", code: 7, eta: 18, location: locations[3] },
     { status: "OrderPicked", code: 7, eta: 15, location: locations[4] },
     { status: "OrderPicked", code: 7, eta: 13, location: locations[5] },
@@ -92,6 +92,8 @@ async function simulateOrderJourney2(brand, orderId, items) {
 
 
 
+
+
  
 
       if(orderEvents[i].code==11)
@@ -99,19 +101,15 @@ async function simulateOrderJourney2(brand, orderId, items) {
             //assigned
             riderdetailsFlag=true;
 
-            if(i>4 && !isOrderOnHold && orderEvents[i].code==11){
-              isOrderOnHold=true;
+            if(orderEvents[i].ishod && !isOrderOnHold && orderEvents[i].code==11){
+              isOrderOnHold=true; 
               isStoreGeoFenceIn=true;
-      
             }
         }
-      else{
-
-        if(i>4 && isOrderOnHold ){
+        else{
           isOrderOnHold=false;
         }
-
-      }
+    
         if(orderEvents[i].code==7)
         {
           etaFlag=true;
