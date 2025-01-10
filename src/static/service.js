@@ -74,6 +74,7 @@ async function publishData(brand, data) {
       const now = new Date().toISOString();
       let lastCoordinatesUpdated = now;
       let payloadUpdateTime = now;
+      let trackingId;
 
       if (existingDoc.exists()) {
         const existingData = existingDoc.data();
@@ -108,6 +109,16 @@ async function publishData(brand, data) {
         }
 
         payloadUpdateTime = now;
+
+
+        // persisting data
+        if(existingData["trackId"]){
+          trackingId=existingData.trackId;
+        }
+        else{
+          trackingId=""
+        }
+        
       }
 
      
@@ -133,6 +144,7 @@ async function publishData(brand, data) {
         ...data,
        lastCoordinatesUpdated,
         payloadUpdateTime,
+        trackId:trackingId
       };
       // Add or overwrite the document in Firestore
       await setDoc(docRef, updatedData);
