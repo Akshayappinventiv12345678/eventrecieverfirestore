@@ -101,6 +101,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
 
             if(i>4 && !isOrderOnHold && orderEvents[i].code==11){
               isOrderOnHold=true;
+              isStoreGeoFenceIn=true;
       
             }
         }
