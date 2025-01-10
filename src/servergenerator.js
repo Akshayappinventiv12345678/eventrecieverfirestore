@@ -132,7 +132,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
         orderStatusName: orderEvents[i].status,
         isIntegratedPartner: true,
         isOrderOnHold: false,
-        isClubbedOrder: true,
+        isClubbedOrder: false,
         inTransit: false,
         isStoreGeoFenceIn,
         tmpKey1: "",
