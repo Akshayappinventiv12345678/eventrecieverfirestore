@@ -65,6 +65,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
   let isStoreGeoFenceIn=true;
   let etaFlag=false;
   let riderdetailsFlag=false;
+  let isCustomerGeoFenceIn=false;
 
 
   let result= addOrder(true,orderId);
@@ -92,9 +93,13 @@ async function simulateOrderJourney2(brand, orderId, items) {
         }
       
 
-      if(orderEvents[i].code===12){
-        isStoreGeoFenceIn=false;
-      }
+        if(orderEvents[i].code===12){
+          isStoreGeoFenceIn=false;
+        }
+
+        if(orderEvents[i].code===13){
+          isCustomerGeoFenceIn=true;
+        }
       
       // Firestore payload structure
       let firestorePayload = {
@@ -140,8 +145,13 @@ async function simulateOrderJourney2(brand, orderId, items) {
         tmpKey4: "",
         tmpKey5: "",
       };
+      let additionalPayload={
+        isNonIntegratedPartner:false, //manual dod
+        isCustomerGeoFenceIn,
+        trackId:"sample_track_id"
+      }
 
-     firestorePayload= Object.assign({},firestorePayload,orderEvents[i].location);
+     firestorePayload= Object.assign({},firestorePayload,orderEvents[i].location,additionalPayload);
      console.log(firestorePayload)
 
      let response=await makePostRequest(firestorePayload);
