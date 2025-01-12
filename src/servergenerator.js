@@ -74,16 +74,17 @@ async function simulateOrderJourney2(brand, orderId, items) {
   let isStoreGeoFenceIn=true;
   let etaFlag=false;
   let riderdetailsFlag=false;
+  let isCustomerGeoFenceIn=false;
 
 
   let result= addOrder(true,orderId);
-  console.log("Adding Order",orderId,result);
+   console.log("Adding Order",orderId,result);
 
 
-  const now = new Date();
-  now.setMinutes(now.getMinutes() - 5); // Subtract 5 minutes
-  let posCreatedTime  = now.toISOString(); // Adds 5 minutes (5 * 60 * 1000 milliseconds)
-
+   const now = new Date();
+   now.setMinutes(now.getMinutes() - 5); // Subtract 5 minutes
+   let posCreatedTime  = now.toISOString(); // Adds 5 minutes (5 * 60 * 1000 milliseconds)
+ 
   let isOrderOnHold=false;
 
   for (let i = 0; i < orderEvents.length; i++) {
@@ -94,7 +95,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
 
 
 
- 
+
 
       if(orderEvents[i].code==11)
         {
@@ -119,10 +120,13 @@ async function simulateOrderJourney2(brand, orderId, items) {
         }
       
 
-      if(orderEvents[i].code===12){
-        isStoreGeoFenceIn=false;
-        
-      }
+        if(orderEvents[i].code===12){
+          isStoreGeoFenceIn=false;
+        }
+
+        if(orderEvents[i].code===13){
+          isCustomerGeoFenceIn=true;
+        }
       
       // Firestore payload structure
       let firestorePayload = {
@@ -134,7 +138,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
         storeBSPNumber: "7f98005bdd224e6f9f7207bc43a4",
         storeLocationLat: "26.1826617",
         storeLocationLng: "50.4661924",
-        orderId: orderId,
+        orderId: "UAE_"+orderId,
         externalOrderId: orderId,
         almpOrderId: "4c292782f0c7232c3b0fc0e8e2bbc013447ae",
         createdAtTimezone: "2024-12-12T23:42:56Z",
@@ -168,8 +172,13 @@ async function simulateOrderJourney2(brand, orderId, items) {
         tmpKey4: "",
         tmpKey5: "",
       };
+      let additionalPayload={
+        isNonIntegratedPartner:false, //manual dod
+        isCustomerGeoFenceIn,
+        trackId:"sample_track_id"
+      }
 
-     firestorePayload= Object.assign({},firestorePayload,orderEvents[i].location);
+     firestorePayload= Object.assign({},firestorePayload,orderEvents[i].location,additionalPayload);
      console.log(firestorePayload)
 
      let response=await makePostRequest(firestorePayload);
