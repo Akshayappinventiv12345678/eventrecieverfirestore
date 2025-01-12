@@ -111,7 +111,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
         storeBSPNumber: "7f98005bdd224e6f9f7207bc43a4",
         storeLocationLat: "26.1826617",
         storeLocationLng: "50.4661924",
-        orderId: orderId,
+        orderId: "UAE_"+orderId,
         externalOrderId: orderId,
         almpOrderId: "4c292782f0c7232c3b0fc0e8e2bbc013447ae",
         createdAtTimezone: "2024-12-12T23:42:56Z",
