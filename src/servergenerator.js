@@ -165,7 +165,6 @@ async function simulateOrderJourney2(brand, orderId, items) {
         isOrderOnHold,
         isClubbedOrder: false,
         inTransit: false,
-        isStoreGeoFenceIn,
         tmpKey1: "",
         tmpKey2: "",
         tmpKey3: "",
@@ -175,8 +174,12 @@ async function simulateOrderJourney2(brand, orderId, items) {
       let additionalPayload={
         isNonIntegratedPartner:false, //manual dod
         isCustomerGeoFenceIn,
-        trackId:"sample_track_id"
+        trackId:"sample_track_id",
       }
+
+      if (orderEvents[i].code == 7) {
+        additionalPayload.isStoreGeoFenceIn =isStoreGeoFenceIn;
+    }
 
      firestorePayload= Object.assign({},firestorePayload,orderEvents[i].location,additionalPayload);
      console.log(firestorePayload)
