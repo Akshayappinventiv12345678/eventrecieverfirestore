@@ -76,7 +76,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
  
  
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 2; i++) {
     try {
       console.log(`Sending "${orderEvents[i].status}" update for ${brand}, Order ID: ${orderId}`);
 
@@ -133,7 +133,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
         orderPosId: "63102",
         orderSourceName: "Call Center",
         orderStatusName: orderEvents[i].status,
-        isIntegratedPartner: true,
+        isIntegratedPartner: false,
         isOrderOnHold: false,
         isClubbedOrder: false,
         inTransit: false,
@@ -145,7 +145,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
         tmpKey5: "",
       };
       let additionalPayload={
-        isNonIntegratedPartner:false, //manual dod
+        isNonIntegratedPartner:true, //manual dod
         isCustomerGeoFenceIn,
         trackId:"sample_track_id"
       }
