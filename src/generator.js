@@ -130,9 +130,9 @@ async function simulateOrderJourney2(brand, orderId, items) {
     { status: "OrderPicked", code: 7, eta: 5, location: locations[11] },
     { status: "OrderPicked", code: 7, eta: 4, location: locations[12] },
     { status: "OrderPicked", code: 7, eta: 3, location: locations[13] },
-    { status: "OrderPicked", code: 7, eta: 2, location: locations[14] },
-    { status: "OrderPicked", code: 7, eta: 1, location: locations[15] },
-    { status: 'OrderPicked', code: 13, eta: 1, location: locations[16] },
+    { status: "OrderPicked", code: 13, eta: 2, location: locations[14] },
+    { status: "OrderPicked", code: 7 ,eta: 1, location: locations[15] },
+    { status: 'OrderPicked', code: 7, eta: 1, location: locations[16] },
     { status: 'Delivered', code: 8, eta: 0, location: locations[16] },
   ];
   
