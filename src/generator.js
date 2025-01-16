@@ -166,7 +166,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
       
       // Firestore payload structure
       let firestorePayload = {
-        countryId: 2,
+        countryId: 1,
         brandId: 3,
         storeId: "115",
         customerPhone: "388296",
