@@ -1,7 +1,10 @@
 const axios = require('axios');
-const url="https://almpridertracking.azurewebsites.net/api/ridertracking?code=09DSPdilw0t2MJvm2kgb3gMLEo_MdUi8DgcFCSK9EPMaAzFuX5jRLQ%3D%3D"
+// const url="https://almpridertracking.azurewebsites.net/api/ridertracking?code=09DSPdilw0t2MJvm2kgb3gMLEo_MdUi8DgcFCSK9EPMaAzFuX5jRLQ%3D%3D"
+// const url="https://almpridertracing.azurewebsites.net/api/ridertracking?code=auebG2JJEjzT9pTuUIz_BL2WWuDBkUbm_XN6bU6K11NwAzFum58qJw%3D%3D"
 // const url='http://localhost:7071/api/ridertracking'
+const url="https://adpalmpridertracking.azurewebsites.net/api/ridertracking?code=n8p7IxHOK1_xMNghNYdmQ9-01-JYT5SRZQg-JqumFsGWAzFu_OD5qw%3D%3D"
 /**
+ * 
  * Makes an HTTP POST request to a given URL with provided data and headers.
  * @param {string} url - The URL to send the POST request to.
  * @param {Object} data - The data to send in the POST request body.

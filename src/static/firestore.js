@@ -1,12 +1,8 @@
 // Import the functions you need from the SDKs you need
 const { initializeApp } = require("firebase/app");
-const {getFirestore,collection,getDocs} =require("firebase/firestore");
+const { getFirestore, collection, onSnapshot } = require("firebase/firestore");
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyD6J-lPmtiFT1IpfCqrv7FY_wZKdWHsCHE",
   authDomain: "almp-poc-firestore-v1.firebaseapp.com",
@@ -17,36 +13,31 @@ const firebaseConfig = {
   measurementId: "G-HVY0V4RTDY"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
-// console.log(app,firestore)
 
+// Function to listen to real-time changes (added and modified documents)
+const listenToChanges = () => {
+    const snapshot = collection(firestore, 'pocv1');
 
-let connectionStatus = false;
-
-const checkConnection = () => {
-    if (connectionStatus) {
-        console.log('Firestore connection is live');
-    } else {
-        console.log('Firestore connection is not live');
-    }
+    // Real-time listener for changes in the collection
+    onSnapshot(snapshot, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+            if (change.type === 'added') {
+                console.log(`New document added: ${change.doc.id} =>`, change.doc.data());
+            } 
+            if (change.type === 'modified') {
+                console.log(`Document modified: ${change.doc.id} =>`, change.doc.data());
+            }
+        });
+    }, (error) => {
+        console.error('Error listening to Firestore changes:', error);
+    });
 };
-  // Example: Read data from Firestore
-const snapshot =  collection(firestore,'pocv1');
 
-// const st=async ()=>{
-// const res=await getDocs(snapshot);
-// res.forEach(doc => {
-//         console.log(doc.id, '=>', doc.data());
-//  });
-// }
-// st()
+// Call the function to start listening
+listenToChanges();
 
-
-// Export the Firestore client and reconnect function
+// Export Firestore client if needed for other parts of the application
 module.exports = { firestore };
-
-// Call the start function to check the connection when the module is loaded
-// start();
-
-
