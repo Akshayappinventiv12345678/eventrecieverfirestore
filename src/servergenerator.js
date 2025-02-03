@@ -16,7 +16,7 @@ function getRandomETA() {
   return Math.floor(Math.random() * 30) + 15;  // ETA between 15 to 45 minutes
 }
 function getRandomTimeout() {
-  return 0;
+  // return 0;
   return Math.floor(Math.random() * 5) + 5;  // ETA between 5 to 10 seconds
 }
 
