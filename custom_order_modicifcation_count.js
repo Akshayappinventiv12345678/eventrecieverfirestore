@@ -23,7 +23,7 @@ let updates={}
 let total=0;
 let custom_doc="modificationCount";
 let custom_doc_list={}
-let customdocinitales="44420250131";
+let customdocinitales="10120250204";
 
 let almpStatusId=8;
 let almpStatusId_count=0;
