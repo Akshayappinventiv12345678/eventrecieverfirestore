@@ -23,7 +23,7 @@ let updates={}
 let total=0;
 let custom_doc="modificationCount";
 let custom_doc_list={}
-let customdocinitales="777";
+let customdocinitales="77777";
 
 let almpStatusId=8;
 let almpStatusId_count=0;
@@ -33,29 +33,14 @@ let total_not_delivered=0;
 let total_evets=0;
 // Function to listen to real-time changes (added and modified documents)
 const listenToChanges = (col) => {
+  console.log("listening ",col)
     const snapshot = collection(firestore, col);
 
     // Real-time listener for changes in the collection
     onSnapshot(snapshot, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
             let id=change.doc.id;
-          if(id.includes(customdocinitales)){
-            custom_doc_list[id]={"recieved":change.doc.data()[custom_doc]}//modifcationcount key in custom_doc
-            console.log("custom doc delivered ",custom_doc_list[id]);
-
-            if(almpStatusId==change.doc.data()["almpStatusId"])
-            {
-              custom_doc_list[id]["delivered"]= "yes"
-              total_delivered++;
-            }
-            else{
-              custom_doc_list[id]["delivered"]= "no"
-              total_not_delivered++;
-            }
          
-          }
-         
-        
                                
 
         });
@@ -64,7 +49,13 @@ const listenToChanges = (col) => {
     });
 };
 
-['kfc_uae','kfc_egypt','kfc_kuwait','kfc_saudiarabia'].forEach(val=>listenToChanges(val))
+['kfc_uae','kfc_egypt','kfc_kuwait'].forEach(val=>{
+  
+  for (let i = 1; i <= 4; i++) {
+    listenToChanges(`${val}${i}`);
+  }
+}
+)
 // Call the function to start listening
 //listenToChanges();
 

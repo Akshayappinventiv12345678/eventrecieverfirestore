@@ -155,8 +155,16 @@ async function simulateOrderJourney2(brand, orderId, items) {
      firestorePayload= Object.assign({},firestorePayload,orderEvents[i].location,additionalPayload);
      console.log(firestorePayload)
 
-     let response=await makePostRequest(firestorePayload);
+    //  let response=await makePostRequest(firestorePayload);
      console.log("response",response)
+
+           // Send event to the Firestore
+           publishData(brand, firestorePayload)
+           .then((msg) => console.log("----Payload Sent Successfully----", msg))
+           .catch((err) => console.log("----Error Occurred----", err));
+   
+         // Simulate delay
+      // await new Promise((resolve) => setTimeout(resolve, getRandomTimeout() * 1000));
     
       await new Promise((resolve) => setTimeout(resolve, getRandomTimeout() * 1000));
 

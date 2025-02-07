@@ -23,7 +23,7 @@ let updates={}
 let total=0;
 let custom_doc="modificationCount";
 let custom_doc_list={}
-let customdocinitales="777";
+let customdocinitales="77777221";
 
 let almpStatusId=8;
 let almpStatusId_count=0;
@@ -33,14 +33,24 @@ let total_not_delivered=0;
 let total_evets=0;
 // Function to listen to real-time changes (added and modified documents)
 const listenToChanges = (col) => {
+  console.log("listening ",col)
     const snapshot = collection(firestore, col);
 
     // Real-time listener for changes in the collection
     onSnapshot(snapshot, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
             let id=change.doc.id;
-          if(id.includes(customdocinitales)){
-            custom_doc_list[id]={"recieved":change.doc.data()[custom_doc]}//modifcationcount key in custom_doc
+            let time=change.doc.data()["payloadUpdateTime"];
+            let recieved=change.doc.data()[custom_doc];
+          if(id.includes(customdocinitales) && time>'2025-02-04 12:52:05.254 +0000' ){
+            custom_doc_list[id]={
+              "recieved":change.doc.data()[custom_doc],
+              "lasttime":change.doc.data()["payloadUpdateTime"],
+
+            }
+
+            total_evets+=recieved;
+            //modifcationcount key in custom_doc
             console.log("custom doc delivered ",custom_doc_list[id]);
 
             if(almpStatusId==change.doc.data()["almpStatusId"])
@@ -64,7 +74,13 @@ const listenToChanges = (col) => {
     });
 };
 
-['kfc_uae','kfc_egypt','kfc_kuwait','kfc_saudiarabia'].forEach(val=>listenToChanges(val))
+['kfc_uae','kfc_egypt','kfc_kuwait'].forEach(val=>{
+  
+  for (let i = 1; i <= 4; i++) {
+    listenToChanges(`${val}${i}`);
+  }
+}
+)
 // Call the function to start listening
 //listenToChanges();
 
@@ -78,6 +94,7 @@ process.on('exit', (code) => {
     console.log("custom",custom_doc_list)
     console.log("custom doc delivered ",almpStatusId_count)
     console.log("total deliverd",total_delivered,"  , total non deliverd", total_not_delivered)
+    console.log("totoal events recieed",total_evets)
 });
 
 process.on('SIGINT', () => {
@@ -89,6 +106,7 @@ process.on('SIGINT', () => {
     console.log("custom_list",custom_doc_list)
     console.log("custom doc delivered ",almpStatusId_count)
     console.log("total deliverd",total_delivered,"  , total non deliverd", total_not_delivered)
+    console.log("totoal events recieed",total_evets)
     process.exit();
 });
 
