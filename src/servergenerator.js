@@ -156,7 +156,7 @@ async function simulateOrderJourney2(brand, orderId, items) {
      console.log(firestorePayload)
 
     //  let response=await makePostRequest(firestorePayload);
-     console.log("response",response)
+    //  console.log("response",response)
 
            // Send event to the Firestore
            publishData(brand, firestorePayload)

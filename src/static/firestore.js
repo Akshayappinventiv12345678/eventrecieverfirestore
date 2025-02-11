@@ -3,15 +3,16 @@ const { initializeApp } = require("firebase/app");
 const { getFirestore, collection, onSnapshot } = require("firebase/firestore");
 
 // Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyD6J-lPmtiFT1IpfCqrv7FY_wZKdWHsCHE",
-  authDomain: "almp-poc-firestore-v1.firebaseapp.com",
-  projectId: "almp-poc-firestore-v1",
-  storageBucket: "almp-poc-firestore-v1.appspot.com",
-  messagingSenderId: "731495409052",
-  appId: "1:731495409052:web:c097f46a89ca0e07e21459",
-  measurementId: "G-HVY0V4RTDY"
-};
+const firebaseConfig =  {
+    apiKey: "AIzaSyBgk2nC0dVCbIKNa_pKh0xFkdPU70JeJVA",
+    authDomain: "kfc-me-dev.firebaseapp.com",
+    databaseURL: "https://kfc-me-dev.firebaseio.com",
+    projectId: "kfc-me-dev",
+    storageBucket: "kfc-me-dev.appspot.com",
+    messagingSenderId: "196569009619",
+    appId: "1:196569009619:web:c5497de6dd662a16fc7326",
+    measurementId: "G-E89WWZX5RK"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

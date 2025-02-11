@@ -53,7 +53,7 @@ const listenToChanges = (col) => {
   
   for (let i = 1; i <= 4; i++) {
     listenToChanges(`${val}${i}`);
-  }
+  }a
 }
 )
 // Call the function to start listening
