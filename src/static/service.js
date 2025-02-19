@@ -48,7 +48,7 @@ async function publishData(brand, data) {
     if (!data.externalOrderId) throw new Error("Missing required field 'externalOrderId'.");
 
     const docId = data.externalOrderId || "TRIAL";
-    const collectionPath = "kfc_uae1";
+    const collectionPath = "kfc_uae";
     const docRef = doc(firestore, collectionPath, docId);
     console.log("Publishing to Firestore:", collectionPath, docId);
 

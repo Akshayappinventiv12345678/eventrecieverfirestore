@@ -4,15 +4,15 @@ const { getFirestore, collection, onSnapshot, updateDoc } = require("firebase/fi
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAgDma1m31t_zeJI-QrfG7BCsAQl-bbkDU",
-    authDomain: "kfc-me-dev.firebaseapp.com",
-    databaseURL: "https://kfc-me-dev.firebaseio.com",
-    projectId: "kfc-me-dev",
-    storageBucket: "kfc-me-dev.appspot.com",
-    messagingSenderId: "196569009619",
-    appId: "1:196569009619:web:b625b5ad40fab219fc7326",
-    measurementId: "G-RCE0QBTRM1"
-  };;
+  apiKey: "AIzaSyCLl6uIELGFEsQ3QWvGEDrT7jpwLQrC53A",
+  authDomain: "kfc-firestore.firebaseapp.com",
+  databaseURL: "https://kfc-firestore-default-rtdb.firebaseio.com",
+  projectId: "kfc-firestore",
+  storageBucket: "kfc-firestore.appspot.com",
+  messagingSenderId: "832716360145",
+  appId: "1:832716360145:web:c59248110faccc61ff78f0",
+  measurementId: "G-KCZPCW7QQP"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -23,7 +23,7 @@ let updates={}
 let total=0;
 let custom_doc="modificationCount";
 let custom_doc_list={}
-let customdocinitales="77777221";
+let customdocinitales="";
 
 let almpStatusId=8;
 let almpStatusId_count=0;
@@ -80,10 +80,9 @@ const listenToChanges = (col) => {
 };
 
 ['kfc_uae','kfc_egypt','kfc_kuwait'].forEach(val=>{
+
+    listenToChanges(`${val}`);
   
-  for (let i = 1; i <= 1; i++) {
-    listenToChanges(`${val}${i}`);
-  }
 }
 )
 // Call the function to start listening
